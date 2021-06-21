@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">App événement</string>
+    <string name="addevent">Ajouter un événement</string>
+    <string name="welcome">Bienvenue</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
