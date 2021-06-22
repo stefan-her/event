@@ -4,4 +4,12 @@
     <string name="welcome">Bienvenue</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="insert_new_event">Insérer un événement</string>
+    <string name="date">Date &amp; heure</string>
+    <string name="insertdate">--/--/----</string>
+    <string name="inserthour">--:--</string>
+    <string name="title">Titre</string>
+    <string name="desc">Desription</string>
+    <string name="adres">Adresse</string>
+    <string name="add">ajouter</string>
 </resources>
