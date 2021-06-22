@@ -1,18 +1,18 @@
 package be.stefan.event.models
-import java.time.LocalDateTime
 
 class Event {
 
-    var title : String
-    var description : String
-    var time : LocalDateTime
-    var grp : Int
 
-    constructor( title : String, description : String, time : LocalDateTime , grp : Int) {
+    var title : String
+    var desc : String
+    var time : String
+    var address : String
+
+    constructor( title : String, desc : String, time : String , address: String) {
         this.title = title
-        this.description = description
+        this.desc = desc
         this.time = time
-        this.grp = grp
+        this.address = address
     }
 
 }

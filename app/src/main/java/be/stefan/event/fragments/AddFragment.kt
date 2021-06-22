@@ -104,7 +104,6 @@ class AddFragment : Fragment() {
         cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
     }
 
-
     companion object {
         fun newInstance() = AddFragment()
     }
