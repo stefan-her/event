@@ -16,8 +16,7 @@ class MainActivity : AppCompatActivity() {
         init()
     }
 
-    fun init() {
-
+    private fun init() {
         val welcomeFragment = WelcomeFragment.newInstance()
         supportFragmentManager.beginTransaction()
             .add(R.id.container_fragment, welcomeFragment)
@@ -29,19 +28,15 @@ class MainActivity : AppCompatActivity() {
 
                 val listFragment = ListFragment.newInstance()
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.container_fragment, listFragment)
                     .setCustomAnimations(
                         android.R.anim.slide_in_left,
                         android.R.anim.fade_out,
                         android.R.anim.fade_in,
                         android.R.anim.slide_out_right
                     )
-                    .addToBackStack(null)
+                    .replace(R.id.container_fragment, listFragment)
                     .commit()
-
             }
         }.start()
-
     }
-
 }
