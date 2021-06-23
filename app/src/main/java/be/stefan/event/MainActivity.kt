@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
+import be.stefan.event.db.EventDao
 import be.stefan.event.fragments.ListFragment
 import be.stefan.event.fragments.WelcomeFragment
 
@@ -14,6 +15,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         init()
+
     }
 
     private fun init() {

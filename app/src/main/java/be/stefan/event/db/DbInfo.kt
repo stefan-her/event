@@ -13,17 +13,17 @@ class DbInfo {
         public val COLUMN_ADDRESS : String = "address"
 
         public val REQUEST_CREATE : String = """
-        CREATE TABLE $TABLE_NAME (
-            ${this.DB_NAME}.${this.COLUMN_ID} = INTEGER PRIMARY KEY AUTOINCREMENT,
-            ${this.DB_NAME}.${this.COLUMN_TITLE} = TEXT NOT NULL,
-            ${this.DB_NAME}.${this.COLUMN_TIME} = TEXT NOT NULL,
-            ${this.DB_NAME}.${this.COLUMN_DESC} = TEXT,
-            ${this.DB_NAME}.${this.COLUMN_ADDRESS} = TEXT
-        )"""
+            CREATE TABLE $TABLE_NAME (
+                ${this.TABLE_NAME}.${this.COLUMN_ID} = INTEGER PRIMARY KEY AUTOINCREMENT,
+                ${this.TABLE_NAME}.${this.COLUMN_TITLE} = TEXT NOT NULL,
+                ${this.TABLE_NAME}.${this.COLUMN_TIME} = TEXT NOT NULL,
+                ${this.TABLE_NAME}.${this.COLUMN_DESC} = TEXT,
+                ${this.TABLE_NAME}.${this.COLUMN_ADDRESS} = TEXT
+            )"""
 
         public val REQUEST_DELETE : String = """
-        DROPO TABLE ${this.DB_NAME};
-        """
+            DROP TABLE ${this.TABLE_NAME};
+            """
     }
 
 }

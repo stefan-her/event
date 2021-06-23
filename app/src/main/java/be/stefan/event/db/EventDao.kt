@@ -49,7 +49,7 @@ class EventDao {
     private fun createContentValues(item : Event) : ContentValues {
         val contentValues = ContentValues()
         contentValues.put(DbInfo.COLUMN_TITLE, item.title)
-        contentValues.put(DbInfo.COLUMN_TIME, item.time)
+        contentValues.put(DbInfo.COLUMN_TIME, item.time.toString())
         contentValues.put(DbInfo.COLUMN_DESC, item.desc)
         contentValues.put(DbInfo.COLUMN_ADDRESS, item.address)
         return contentValues

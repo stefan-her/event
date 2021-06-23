@@ -3,7 +3,6 @@ package be.stefan.event.fragments
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,12 +10,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.ImageButton
 import be.stefan.event.R
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.textfield.TextInputEditText
+import be.stefan.event.db.EventDao
+import be.stefan.event.models.Event
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class AddFragment : Fragment() {
 
@@ -65,6 +65,18 @@ class AddFragment : Fragment() {
 
     private fun send() {
         if(check()) {
+            val item = Event(
+                null,
+                et_title.text.toString().trim(),
+                et_desc.text.toString().trim(),
+                et_date.text.toString().trim() + " " + et_hour.text.toString().trim(),
+                et_address.text.toString().trim(),
+            )
+
+            val dao : EventDao = EventDao(requireContext())
+            dao.openReadable()
+            val id : Long = dao.insert(item)
+            dao.close()
 
         }
     }
