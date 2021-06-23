@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import be.stefan.event.R
 import be.stefan.event.models.Event
 
-class EventListAdapter(private val list: List<Event>) : RecyclerView.Adapter<EventListAdapter.ViewHolder>() {
+class EventListAdapter(private val list: MutableList<Event>) : RecyclerView.Adapter<EventListAdapter.ViewHolder>() {
 
     class ViewHolder(v : View) : RecyclerView.ViewHolder(v) {
         val tvTitle = v.findViewById(R.id.tv_title) as TextView

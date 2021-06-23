@@ -96,11 +96,11 @@ class EventDao {
         return null
     }
 
-    fun allItems() : List<Event>? {
+    fun allItems() : MutableList<Event>? {
         val cursor = db.query(
             EventTb.TABLE_NAME,
             null,
-            "datetime(${EventTb.COLUMN_TIME}) > datetime('now')",
+            "${EventTb.COLUMN_TIME} > datetime('now')",
             null,
             null,
             null,
@@ -115,7 +115,7 @@ class EventDao {
                 cursor.moveToNext()
             }
         }
-        return list.toList()
+        return list
     }
 
     fun update(id : Long) : Boolean {
