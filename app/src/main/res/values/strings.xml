@@ -12,4 +12,5 @@
     <string name="desc">Desription</string>
     <string name="adres">Adresse</string>
     <string name="add">ajouter</string>
+    <string name="doubleinsert">Doublon!</string>
 </resources>

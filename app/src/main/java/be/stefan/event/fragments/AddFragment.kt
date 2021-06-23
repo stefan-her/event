@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Toast
 import be.stefan.event.R
 import be.stefan.event.db.EventDao
 import be.stefan.event.models.Event
@@ -70,14 +71,34 @@ class AddFragment : Fragment() {
                 et_title.text.toString().trim(),
                 et_desc.text.toString().trim(),
                 et_date.text.toString().trim() + " " + et_hour.text.toString().trim(),
-                et_address.text.toString().trim(),
+                et_address.text.toString().trim()
             )
 
-            val dao : EventDao = EventDao(requireContext())
+            val dao = EventDao(requireContext())
+
             dao.openReadable()
-            val id : Long = dao.insert(item)
+            val check : Boolean = dao.searchEguals(item)
             dao.close()
 
+            if(!check) {
+                dao.openWritable()
+                val id : Long = dao.insert(item)
+                dao.close()
+            } else {
+                Toast.makeText(requireContext(), getString(R.string.doubleinsert), Toast.LENGTH_LONG).show()
+            }
+
+            val listFragment = ListFragment.newInstance()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                    android.R.anim.slide_in_left,
+                    android.R.anim.fade_out,
+                    android.R.anim.fade_in,
+                    android.R.anim.slide_out_right
+                )
+                .addToBackStack(null)
+                .replace(R.id.container_fragment, listFragment)
+                .commit()
         }
     }
 

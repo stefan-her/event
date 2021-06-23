@@ -9,11 +9,11 @@ class DbHelper : SQLiteOpenHelper {
     constructor(context: Context) : super(context, DbInfo.DB_NAME, null, DbInfo.DB_VERSION)
 
     override fun onCreate(db: SQLiteDatabase?) {
-        db?.execSQL(DbInfo.REQUEST_CREATE)
+        db?.execSQL(EventTb.REQUEST_CREATE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        db?.execSQL(DbInfo.REQUEST_DELETE)
+        db?.execSQL(EventTb.REQUEST_DELETE)
         onCreate(db)
     }
 }

@@ -37,34 +37,51 @@ class EventDao {
     // CRUD
 
     private fun cursor2Item(cursor : Cursor) : Event {
-        val id = cursor.getLong(cursor.getColumnIndex(DbInfo.COLUMN_ID))
-        val title = cursor.getString(cursor.getColumnIndex(DbInfo.COLUMN_TITLE))
-        val time = cursor.getString(cursor.getColumnIndex(DbInfo.COLUMN_TIME))
-        val desc = cursor.getString(cursor.getColumnIndex(DbInfo.COLUMN_DESC))
-        val address = cursor.getString(cursor.getColumnIndex(DbInfo.COLUMN_ADDRESS))
+        val id = cursor.getLong(cursor.getColumnIndex(EventTb.COLUMN_ID))
+        val title = cursor.getString(cursor.getColumnIndex(EventTb.COLUMN_TITLE))
+        val time = cursor.getString(cursor.getColumnIndex(EventTb.COLUMN_TIME))
+        val desc = cursor.getString(cursor.getColumnIndex(EventTb.COLUMN_DESC))
+        val address = cursor.getString(cursor.getColumnIndex(EventTb.COLUMN_ADDRESS))
         val item = Event(id, title, time, desc, address)
         return item
     }
 
     private fun createContentValues(item : Event) : ContentValues {
         val contentValues = ContentValues()
-        contentValues.put(DbInfo.COLUMN_TITLE, item.title)
-        contentValues.put(DbInfo.COLUMN_TIME, item.time.toString())
-        contentValues.put(DbInfo.COLUMN_DESC, item.desc)
-        contentValues.put(DbInfo.COLUMN_ADDRESS, item.address)
+        contentValues.put(EventTb.COLUMN_TITLE, item.title)
+        contentValues.put(EventTb.COLUMN_TIME, item.time.toString())
+        contentValues.put(EventTb.COLUMN_DESC, item.desc)
+        contentValues.put(EventTb.COLUMN_ADDRESS, item.address)
         return contentValues
     }
 
     fun insert(item: Event) : Long {
         val contentValues = createContentValues(item)
-        return db.insert(DbInfo.TABLE_NAME, null, contentValues)
+        return db.insert(EventTb.TABLE_NAME, null, contentValues)
+    }
+
+    fun searchEguals(item: Event) : Boolean {
+        val cursor = db.query(
+            EventTb.TABLE_NAME,
+            null,
+            EventTb.COLUMN_TITLE + "= ? AND " +
+                    EventTb.COLUMN_TIME + "= ? AND " +
+                    EventTb.COLUMN_DESC +"= ? AND " +
+                    EventTb.COLUMN_ADDRESS + "= ?",
+            arrayOf(item.title, item.time, item.desc, item.address),
+            null,
+            null,
+            null
+        )
+        if (cursor.count > 0) { return true }
+        return false
     }
 
     fun readItem(id : Long) : Event? {
         val cursor = db.query(
-            DbInfo.TABLE_NAME,
+            EventTb.TABLE_NAME,
             null,
-            DbInfo.COLUMN_ID + "= ?",
+            EventTb.COLUMN_ID + "= ?",
             arrayOf(id.toString()),
             null,
             null,
@@ -81,13 +98,13 @@ class EventDao {
 
     fun allItems() : List<Event>? {
         val cursor = db.query(
-            DbInfo.TABLE_NAME,
+            EventTb.TABLE_NAME,
             null,
-            "datetime(${DbInfo.COLUMN_TIME}) > datetime('now')",
+            "datetime(${EventTb.COLUMN_TIME}) > datetime('now')",
             null,
             null,
             null,
-            DbInfo.COLUMN_TIME +" ASC"
+            EventTb.COLUMN_TIME +" ASC"
         )
 
         if (cursor.count > 0) {
@@ -106,9 +123,9 @@ class EventDao {
     fun update(id : Long) : Boolean {
         val contentValues = ContentValues()
         val nbRow = db.update(
-            DbInfo.TABLE_NAME,
+            EventTb.TABLE_NAME,
             contentValues,
-            DbInfo.COLUMN_ID + " = ?",
+            EventTb.COLUMN_ID + " = ?",
             arrayOf(id.toString())
         )
 
@@ -118,8 +135,8 @@ class EventDao {
 
     fun delete(id : Long) : Boolean {
         val nbRow = db.delete(
-            DbInfo.TABLE_NAME,
-            DbInfo.COLUMN_ID + " = ?",
+            EventTb.TABLE_NAME,
+            EventTb.COLUMN_ID + " = ?",
             arrayOf(id.toString())
         )
 
