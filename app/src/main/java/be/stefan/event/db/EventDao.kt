@@ -107,17 +107,15 @@ class EventDao {
             EventTb.COLUMN_TIME +" ASC"
         )
 
+        val list : MutableList<Event> = mutableListOf()
         if (cursor.count > 0) {
             cursor.moveToFirst()
-            val list : MutableList<Event> = mutableListOf()
             while (!cursor.isAfterLast) {
                 list.add(cursor2Item(cursor))
                 cursor.moveToNext()
             }
-            return list.toList()
         }
-
-        return null
+        return list.toList()
     }
 
     fun update(id : Long) : Boolean {

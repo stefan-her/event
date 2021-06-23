@@ -13,4 +13,6 @@
     <string name="adres">Adresse</string>
     <string name="add">ajouter</string>
     <string name="doubleinsert">Doublon!</string>
+    <string name="description">Description</string>
+    <string name="tv_empty">Liste vide</string>
 </resources>
