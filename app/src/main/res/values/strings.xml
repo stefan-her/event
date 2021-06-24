@@ -15,4 +15,5 @@
     <string name="doubleinsert">Doublon!</string>
     <string name="description">Description</string>
     <string name="tv_empty">Liste vide</string>
+    <string name="delete">Supprimer</string>
 </resources>

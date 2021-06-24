@@ -1,5 +1,7 @@
 package be.stefan.event.adapters
 
+import android.os.Handler
+import android.os.Message
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
