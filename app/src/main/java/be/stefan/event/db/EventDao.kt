@@ -5,6 +5,8 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import be.stefan.event.models.Event
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 class EventDao {
@@ -36,22 +38,25 @@ class EventDao {
 
     // CRUD
 
-    private fun cursor2Item(cursor : Cursor) : Event {
+    private fun cursor2Item(cursor: Cursor): Event {
         val id = cursor.getLong(cursor.getColumnIndex(EventTb.COLUMN_ID))
         val title = cursor.getString(cursor.getColumnIndex(EventTb.COLUMN_TITLE))
+        val category = cursor.getInt(cursor.getColumnIndex(EventTb.COLUMN_CATEGOTY))
         val time = cursor.getString(cursor.getColumnIndex(EventTb.COLUMN_TIME))
         val desc = cursor.getString(cursor.getColumnIndex(EventTb.COLUMN_DESC))
         val address = cursor.getString(cursor.getColumnIndex(EventTb.COLUMN_ADDRESS))
-        val item = Event(id, title, time, desc, address)
-        return item
+
+        return Event(id, title, category, time, desc, address)
     }
 
     private fun createContentValues(item : Event) : ContentValues {
         val contentValues = ContentValues()
         contentValues.put(EventTb.COLUMN_TITLE, item.title)
-        contentValues.put(EventTb.COLUMN_TIME, item.time.toString())
+        contentValues.put(EventTb.COLUMN_CATEGOTY, item.category.toString())
+        contentValues.put(EventTb.COLUMN_TIME, item.time)
         contentValues.put(EventTb.COLUMN_DESC, item.desc)
         contentValues.put(EventTb.COLUMN_ADDRESS, item.address)
+
         return contentValues
     }
 
@@ -66,15 +71,19 @@ class EventDao {
             null,
             EventTb.COLUMN_TITLE + "= ? AND " +
                     EventTb.COLUMN_TIME + "= ? AND " +
+                    EventTb.COLUMN_CATEGOTY + "= ? AND " +
                     EventTb.COLUMN_DESC +"= ? AND " +
                     EventTb.COLUMN_ADDRESS + "= ?",
-            arrayOf(item.title, item.time, item.desc, item.address),
+            arrayOf(item.title, item.category.toString(), item.time, item.desc, item.address),
             null,
             null,
             null
         )
-        if (cursor.count > 0) { return true }
-        return false
+
+        var flag = false
+        if (cursor.count > 0) { flag = true }
+        cursor.close()
+        return flag
     }
 
     fun readItem(id : Long) : Event? {
@@ -100,11 +109,11 @@ class EventDao {
         val cursor = db.query(
             EventTb.TABLE_NAME,
             null,
-            "${EventTb.COLUMN_TIME} > datetime('now')",
+            null, //request DATE compare
             null,
             null,
             null,
-            EventTb.COLUMN_TIME +" ASC"
+            "datetime(${EventTb.COLUMN_TIME}) asc"
         )
 
         val list : MutableList<Event> = mutableListOf()

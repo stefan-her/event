@@ -9,6 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import be.stefan.event.R
 import be.stefan.event.models.Event
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class EventListAdapter(private val list: MutableList<Event>) : RecyclerView.Adapter<EventListAdapter.ViewHolder>() {
 
@@ -28,7 +30,7 @@ class EventListAdapter(private val list: MutableList<Event>) : RecyclerView.Adap
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item : Event = list[position]
         holder.tvTitle.text = item.title
-        holder.tvTime.text = item.time
+        holder.tvTime.text = item.time.toString()
         holder.tvDesc.text = item.desc
         holder.tvAddress.text = item.address
     }

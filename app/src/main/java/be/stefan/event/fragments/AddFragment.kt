@@ -16,7 +16,9 @@ import android.widget.Toast
 import be.stefan.event.R
 import be.stefan.event.db.EventDao
 import be.stefan.event.models.Event
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 class AddFragment : Fragment() {
@@ -33,6 +35,9 @@ class AddFragment : Fragment() {
 
     lateinit var btAdd : Button
 
+    lateinit var localDate : LocalDate
+    lateinit var localDateTime: LocalDateTime
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -47,7 +52,7 @@ class AddFragment : Fragment() {
         btCalendar = v.findViewById(R.id.bt_calendar)
         btCalendar.setOnClickListener { openDialogBoxCalendar() }
         et_date = v.findViewById(R.id.et_date)
-        et_date.hint = "--/--/----"
+        et_date.hint = "-- ---- ----"
         et_date.isEnabled = false
 
         btHour = v.findViewById(R.id.bt_hour)
@@ -69,8 +74,9 @@ class AddFragment : Fragment() {
             val item = Event(
                 null,
                 et_title.text.toString().trim(),
+                0,
+                localDateTime.toString(),
                 et_desc.text.toString().trim(),
-                et_date.text.toString().trim() + " " + et_hour.text.toString().trim(),
                 et_address.text.toString().trim()
             )
 
@@ -123,7 +129,13 @@ class AddFragment : Fragment() {
 
         DatePickerDialog(requireContext(), {
             view, year, month, dayOfMonth ->
-            et_date.setText("$dayOfMonth/${month +1}/$year")
+
+            localDate = LocalDate.of(year, month+1, dayOfMonth)
+
+            val dateIn : LocalDate = LocalDate.of(year, month+1, dayOfMonth)
+            val dateToSet : String = dateIn.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
+
+            et_date.setText(dateToSet)
         }, y, m, d).show()
 
     }
@@ -133,6 +145,9 @@ class AddFragment : Fragment() {
             view, hourOfDay, minute ->
             cal.set(Calendar.HOUR_OF_DAY, hourOfDay)
             cal.set(Calendar.MINUTE, minute)
+
+            localDateTime = localDate.atTime(hourOfDay, minute)
+
             et_hour.setText("$hourOfDay:$minute") },
         cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
     }
