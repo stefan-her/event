@@ -86,6 +86,28 @@ class EventDao {
         return flag
     }
 
+    fun selectOld() : MutableList<Long>? {
+        val cursor = db.query(
+            EventTb.TABLE_NAME,
+            arrayOf(EventTb.COLUMN_ID),
+            " strftime('%s', 'now')  >  strftime('%s', ${EventTb.COLUMN_TIME})", //request DATE compare
+            null,
+            null,
+            null,
+            null
+        )
+
+        val list : MutableList<Long> = mutableListOf()
+        if (cursor.count > 0) {
+            cursor.moveToFirst()
+            while (!cursor.isAfterLast) {
+                list.add(cursor.getLong(cursor.getColumnIndex(EventTb.COLUMN_ID)))
+                cursor.moveToNext()
+            }
+        }
+        return list
+    }
+
     fun readItem(id : Long) : Event? {
         val cursor = db.query(
             EventTb.TABLE_NAME,
@@ -109,7 +131,7 @@ class EventDao {
         val cursor = db.query(
             EventTb.TABLE_NAME,
             null,
-            null, //request DATE compare
+            " strftime('%s', 'now')  <  strftime('%s', ${EventTb.COLUMN_TIME})", //request DATE compare
             null,
             null,
             null,

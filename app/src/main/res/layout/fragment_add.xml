@@ -40,7 +40,32 @@
                     android:id="@+id/et_title"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:textSize="25sp"
+                    android:inputType="text"/>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/category"
                     android:textSize="25sp"/>
+
+                <Spinner
+                    android:id="@+id/sp_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:minWidth="150dp"
+                    android:spinnerMode="dropdown"
+                    />
 
             </LinearLayout>
 
@@ -66,7 +91,8 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:textSize="25sp"
-                        android:layout_weight="2"/>
+                        android:layout_weight="2"
+                        android:inputType="date"/>
 
                     <View
                         android:layout_width="10dp"
@@ -91,7 +117,8 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:textSize="25sp"
-                        android:layout_weight="2"/>
+                        android:layout_weight="2"
+                        android:inputType="time"/>
 
                     <View
                         android:layout_width="10dp"
@@ -124,7 +151,8 @@
                         android:layout_height="match_parent"
                         android:lines="4"
                         android:gravity="top"
-                        android:textSize="25sp"/>
+                        android:textSize="25sp"
+                        android:inputType="textMultiLine"/>
 
                 </LinearLayout>
 
@@ -144,7 +172,8 @@
                         android:id="@+id/et_address"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textSize="25sp"/>
+                        android:textSize="25sp"
+                        android:inputType="text"/>
 
                 </LinearLayout>
 

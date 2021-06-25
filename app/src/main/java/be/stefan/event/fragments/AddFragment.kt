@@ -5,20 +5,16 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.Toast
+import android.widget.*
+import androidx.fragment.app.Fragment
 import be.stefan.event.R
 import be.stefan.event.db.EventDao
 import be.stefan.event.models.Event
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 class AddFragment : Fragment() {
@@ -33,10 +29,14 @@ class AddFragment : Fragment() {
     lateinit var et_date : EditText
     lateinit var et_hour : EditText
 
+    lateinit var spCategory : Spinner
+
     lateinit var btAdd : Button
 
     lateinit var localDate : LocalDate
     lateinit var localDateTime: LocalDateTime
+
+    val listSpinner : List<String> = listOf<String>("cat 1", "cat 2", "cat 3")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,8 +64,26 @@ class AddFragment : Fragment() {
         btAdd = v.findViewById(R.id.bt_insert)
         btAdd.setOnClickListener { send() }
 
+        spCategory = v.findViewById(R.id.sp_category)
+        buidSpinner(spCategory, listSpinner)
+
         return v
 
+    }
+
+    private fun buidSpinner(spCategory: Spinner, list : List<String>) {
+        var list = list.toMutableList()
+        list.add(getString(R.string.editcategory))
+
+        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            android.R.id.text1,
+            list
+        )
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spCategory.adapter = adapter
     }
 
 
