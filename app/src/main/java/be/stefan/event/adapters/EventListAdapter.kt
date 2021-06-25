@@ -28,12 +28,18 @@ class EventListAdapter(private val list: MutableList<Event>) : RecyclerView.Adap
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         val item : Event = list[position]
+
+        val localDateTime = LocalDateTime.parse(item.time)
+        val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm")
+
         holder.tvTitle.text = item.title
-        holder.tvTime.text = item.time.toString()
+        holder.tvTime.text = formatter.format(localDateTime)
         holder.tvDesc.text = item.desc
         holder.tvAddress.text = item.address
     }
 
     override fun getItemCount(): Int = list.size
 }
+
